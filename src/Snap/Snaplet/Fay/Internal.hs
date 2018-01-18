@@ -51,11 +51,10 @@ compileFile config f = do
       return NotFound
     else do
       f' <- canonicalizePath f
-      defConfig <- F.defaultConfigWithSandbox
       res <- flip F.compileFile f'
            . F.addConfigPackages (packages config)
            . F.addConfigDirectoryIncludePaths (includeDirs config)
-           $ defConfig
+           $ F.defaultConfig
                { F.configPrettyPrint = prettyPrint config
                , F.configFilePath = Just f'
                }
